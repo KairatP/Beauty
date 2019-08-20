@@ -12,6 +12,7 @@ class HeaderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, 
     
     let viewModel = BeautyViewModel()
     var timer = Timer()
+    var headerIndexPathClosure: ((IndexPath) -> Void)?
     
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -37,7 +38,6 @@ class HeaderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
-        backgroundColor = #colorLiteral(red: 0.5568627715, green: 0.3529411852, blue: 0.9686274529, alpha: 1)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -104,5 +104,9 @@ class HeaderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, 
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let x = targetContentOffset.pointee.x
         pageController.currentPage = Int(x / collectionView.frame.width)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        headerIndexPathClosure?(indexPath)
     }
 }

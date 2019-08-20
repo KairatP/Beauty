@@ -15,4 +15,5 @@ struct GoodsModel {
     let price: String
     let ratingStatus: Bool
     let rating: String
+    let category: TypeModel
 }

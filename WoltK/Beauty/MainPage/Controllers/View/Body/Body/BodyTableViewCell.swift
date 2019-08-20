@@ -1,5 +1,5 @@
 //
-//  TitleTableViewCell.swift
+//  BodyTableViewCell.swift
 //  WoltK
 //
 //  Created by Kairat on 7/26/19.
@@ -8,7 +8,13 @@
 
 import UIKit
 
-class TitleTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
+protocol BodyTableViewCellDelegate {
+    func didSelectRow(row: Int, category: TypeModel)
+}
+
+class BodyTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout  {
+    
+    var delegate: BodyTableViewCellDelegate?
     
     let cellID = "CellID"
     var model: [GoodsModel]?
@@ -32,12 +38,17 @@ class TitleTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollect
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        collectionView.reloadData()
+    }
+    
     func setupViews() {
         addSubview(collectionView)
         
         collectionView.dataSource = self
         collectionView.delegate = self
-        collectionView.register(TitleCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
+        collectionView.register(BodyCollectionViewCell.self, forCellWithReuseIdentifier: cellID)
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         [collectionView.topAnchor.constraint(equalTo: self.topAnchor),
@@ -45,7 +56,6 @@ class TitleTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollect
          collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
          collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
             ].forEach { $0.isActive = true }
-        
     }
     
     func getInfo(data: [GoodsModel]) {
@@ -57,14 +67,14 @@ class TitleTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! TitleCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as! BodyCollectionViewCell
         guard let viewModelData = model else { return UICollectionViewCell() }
         cell.setupData(model: viewModelData[indexPath.row])
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indewxPath: IndexPath) -> CGSize {
-        return CGSize(width: 170, height: frame.height)
+        return CGSize(width: frame.height * 0.78, height: frame.height)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
@@ -75,8 +85,8 @@ class TitleTableViewCell: UITableViewCell, UICollectionViewDataSource, UICollect
         return 5
     }
     
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let viewModelData = model else { return }
+        delegate!.didSelectRow(row: indexPath.row, category:viewModelData[indexPath.row].category)
     }
 }

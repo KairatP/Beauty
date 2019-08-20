@@ -15,7 +15,6 @@ class HeaderCollectionViewCell: UICollectionViewCell {
         image.contentMode = .scaleAspectFill
         image.layer.cornerRadius = 10
         image.clipsToBounds = true
-        image.backgroundColor = .red
         return image
     }()
     
@@ -32,7 +31,7 @@ class HeaderCollectionViewCell: UICollectionViewCell {
         addSubview(headerImage)
         
         headerImage.translatesAutoresizingMaskIntoConstraints = false
-        [headerImage.topAnchor.constraint(equalTo: self.topAnchor),
+        [headerImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
          headerImage.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -18),
          headerImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -14),
          headerImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 14)

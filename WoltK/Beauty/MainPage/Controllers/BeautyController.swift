@@ -14,7 +14,8 @@ class BeautyController: UIViewController, UITableViewDelegate, UITableViewDataSo
     let cellID = "cellID"
     
     let beautyViewModel = BeautyViewModel()
-
+    let headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 0.6))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -24,13 +25,14 @@ class BeautyController: UIViewController, UITableViewDelegate, UITableViewDataSo
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.blue]
         tableViewSettings()
+        headerAction()
     }
     
     func tableViewSettings() {
         view.addSubview(tableView)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(TitleTableViewCell.self, forCellReuseIdentifier: cellID)
+        tableView.register(BodyTableViewCell.self, forCellReuseIdentifier: cellID)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         [tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
@@ -43,8 +45,8 @@ class BeautyController: UIViewController, UITableViewDelegate, UITableViewDataSo
         tableView.layoutMargins = .zero
         tableView.showsVerticalScrollIndicator = false
         
-        tableView.rowHeight = 205
-        tableView.tableHeaderView = HeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 0.6))
+        tableView.rowHeight = 189
+        tableView.tableHeaderView = headerView
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -69,25 +71,60 @@ class BeautyController: UIViewController, UITableViewDelegate, UITableViewDataSo
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch beautyViewModel.titleTypeSection[indexPath.section] {
         case .bestOnSeason:
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! TitleTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! BodyTableViewCell
+            cell.delegate = self
             let bestOnSeason = beautyViewModel.bestOnSeason
             cell.getInfo(data: bestOnSeason)
             return cell
         case .new:
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! TitleTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! BodyTableViewCell
+            cell.delegate = self
             let new = beautyViewModel.new
             cell.getInfo(data: new)
             return cell
-        case .popular:
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! TitleTableViewCell
-            let popular = beautyViewModel.popular
-            cell.getInfo(data: popular)
-            return cell
         case .sale:
-            let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! TitleTableViewCell
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! BodyTableViewCell
+            cell.delegate = self
             let sale = beautyViewModel.sale
             cell.getInfo(data: sale)
             return cell
+        case .popular:
+            let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! BodyTableViewCell
+            cell.delegate = self
+            let popular = beautyViewModel.popular
+            cell.getInfo(data: popular)
+            return cell
+        }
+    }
+    
+    func headerAction() {
+        headerView.headerIndexPathClosure = { indethPath in
+            let viewModel = HeaderViewModel(title: self.beautyViewModel.headerInput[indethPath.row].imageName)
+            let dHeaderViewController = HeaderDetailViewController(viewModel: viewModel)
+            self.navigationController?.pushViewController(dHeaderViewController, animated: true)
+        }
+    }
+}
+
+extension BeautyController: BodyTableViewCellDelegate {
+    func didSelectRow(row: Int, category: TypeModel) {
+        switch category {
+        case .bestOnSeason:
+            let viewModel = BodyViewModel(model: beautyViewModel.bestOnSeason[row])
+            let viewController = BodyDetailViewController(viewModel: viewModel)
+            self.navigationController?.pushViewController(viewController, animated: true)
+        case .new:
+            let viewModel = BodyViewModel(model: beautyViewModel.new[row])
+            let viewController = BodyDetailViewController(viewModel: viewModel)
+            self.navigationController?.pushViewController(viewController, animated: true)
+        case .popular:
+            let viewModel = BodyViewModel(model: beautyViewModel.popular[row])
+            let viewController = BodyDetailViewController(viewModel: viewModel)
+            self.navigationController?.pushViewController(viewController, animated: true)
+        case .sale:
+            let viewModel = BodyViewModel(model: beautyViewModel.sale[row])
+            let viewController = BodyDetailViewController(viewModel: viewModel)
+            self.navigationController?.pushViewController(viewController, animated: true)
         }
     }
 }
