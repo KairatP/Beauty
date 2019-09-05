@@ -1,5 +1,5 @@
 //
-//  DHeaderView.swift
+//  HDView.swift
 //  WoltK
 //
 //  Created by Kairat on 8/19/19.
@@ -8,15 +8,15 @@
 
 import UIKit
 
-class DHeaderView: UIView {
+class HDView: UIView {
     
     var headerImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
-        image.backgroundColor = .orange
-        image.image = UIImage(named: "1")
         return image
     }()
+    
+    var animator: UIViewPropertyAnimator!
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -29,15 +29,26 @@ class DHeaderView: UIView {
         addSubview(headerImage)
         headerImage.translatesAutoresizingMaskIntoConstraints = false
         [headerImage.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-         headerImage.leadingAnchor.constraint(equalTo: self.leadingAnchor)
+         headerImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+         headerImage.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+         headerImage.heightAnchor.constraint(equalToConstant: self.frame.height)
             ].forEach { $0.isActive = true }
-        [headerImage.bottomAnchor.constraint(equalTo: self.bottomAnchor).identifier = "botom"].first
-        [headerImage.heightAnchor.constraint(equalToConstant: self.frame.height).identifier = "height"].first
-        
-        //        headerImage.image = UIImage(named: )
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func paralaxImage(imageName: String) {
+        headerImage.image = UIImage(named: imageName)
+    }
+    
+    func setupVisualBlureEffect() {
+        animator = UIViewPropertyAnimator(duration: 3.0, curve: .linear, animations: {
+            let blureEffect = UIBlurEffect(style: .regular)
+            let visualEffectView = UIVisualEffectView(effect: blureEffect)
+            
+            self.addSubview(visualEffectView)
+        })
     }
 }

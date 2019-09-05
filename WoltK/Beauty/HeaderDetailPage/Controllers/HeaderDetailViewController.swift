@@ -11,9 +11,8 @@ import UIKit
 class HeaderDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
    
     let viewModel: HeaderViewModel
-    let tableView = HeaderDetailTableView()
+    let tableView = HDTableView()
     let cellID = "cellID"
-//    let hraderView = DHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 0.70))
     
     init(viewModel: HeaderViewModel) {
         self.viewModel = viewModel
@@ -26,11 +25,11 @@ class HeaderDetailViewController: UIViewController, UITableViewDelegate, UITable
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        title = viewModel.title
-//        tableView.tableHeaderView = hraderView
-        navigationController?.navigationBar.prefersLargeTitles = false
+        navigationItem.largeTitleDisplayMode = .never
+        navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationController?.navigationBar.shadowImage = UIImage()
         setupView()
-        view.setNeedsLayout()
+        tableView.headerView.paralaxImage(imageName: viewModel.imageNmae)
     }
     
     func setupView() {
@@ -38,6 +37,7 @@ class HeaderDetailViewController: UIViewController, UITableViewDelegate, UITable
         tableView.register(HeaderDetailViewCell.self, forCellReuseIdentifier: cellID)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         [tableView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -54,5 +54,18 @@ class HeaderDetailViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! HeaderDetailViewCell
         return cell
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let offset = scrollView.contentOffset.y / (UIScreen.main.bounds.width * 0.25)
+        let color = UIColor(red: 1, green: 1, blue: 1, alpha: offset)
+        if offset > 0 {
+            
+            navigationController?.navigationBar.backgroundColor = color
+            UIApplication.shared.statusBarView?.backgroundColor = color
+        } else {
+            navigationController?.navigationBar.backgroundColor = color
+            UIApplication.shared.statusBarView?.backgroundColor = color
+        }
     }
 }

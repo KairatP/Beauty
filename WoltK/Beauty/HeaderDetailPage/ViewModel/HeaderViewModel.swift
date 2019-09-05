@@ -10,9 +10,9 @@ import Foundation
 
 class HeaderViewModel {
     
-    var title = ""
+    var imageNmae: String
     
     init(title: String) {
-        self.title = title
+        self.imageNmae = title
     }
 }

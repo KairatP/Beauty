@@ -38,7 +38,7 @@ class BeautyViewModel {
         GoodsModel(image: "9", type: "Cream", name: "nvbc", price: "34", ratingStatus: true, rating: "9.0", category: .sale)
     ]
     let popular: [GoodsModel] = [
-        GoodsModel(image: "1", type: "popular", name: "xzx", price: "12", ratingStatus: true, rating: "9.0", category: .popular),
+        GoodsModel(image: "1", type: "kjlj", name: "xzx", price: "12", ratingStatus: true, rating: "9.0", category: .popular),
         GoodsModel(image: "2", type: "Cream", name: "sdd", price: "23", ratingStatus: true, rating: "7.0", category: .popular),
         GoodsModel(image: "3", type: "Shampoo", name: "wwee", price: "22", ratingStatus: true, rating: "9.0", category: .popular),
         GoodsModel(image: "4", type: "Shampoo", name: "s`", price: "33", ratingStatus: true, rating: "9.0", category: .popular),

@@ -1,5 +1,5 @@
 //
-//  HearedDetailTableView.swift
+//  HDTableView.swift
 //  WoltK
 //
 //  Created by Kairat on 8/20/19.
@@ -8,30 +8,34 @@
 
 import UIKit
 
-class HeaderDetailTableView: UITableView {
+class HDTableView: UITableView {
     
     var height: NSLayoutConstraint?
     var bottom: NSLayoutConstraint?
-    let headerView = DHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 0.70))
+    let headerView = HDView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 0.59))
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
-        
-           tableHeaderView = headerView
+        tableHeaderView = headerView
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Paralax
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        if let imageView = headerView.subviews.first as? UIImageView {
-            height = imageView.constraints.filter{ $0.identifier == "height" }.first
-            bottom = headerView.constraints.filter{ $0.identifier == "botom" }.first
-        }
         let offsetY = -contentOffset.y
-        height?.constant = max(headerView.bounds.height, headerView.bounds.height + offsetY)
+        
+        if let imageView = headerView.subviews.first as? UIImageView {
+            imageView.constraints.forEach { (constraint) in
+                if constraint.firstAttribute == .height {
+                    constraint.constant = max(headerView.bounds.height, headerView.bounds.height + offsetY)
+                }
+            }
+        }
     }
+    
 }

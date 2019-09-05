@@ -11,6 +11,7 @@ import UIKit
 class BodyDetailViewController: UIViewController {
     
     let viewModel: BodyViewModel
+    let tableView = BDTableView()
     
     init(viewModel: BodyViewModel) {
         self.viewModel = viewModel
@@ -26,4 +27,6 @@ class BodyDetailViewController: UIViewController {
         super.viewDidLoad()
         title = viewModel.model.type
     }
+    
+    
 }

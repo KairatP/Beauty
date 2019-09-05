@@ -15,6 +15,7 @@ class BeautyController: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     let beautyViewModel = BeautyViewModel()
     let headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 0.6))
+    let tableFooterView = TableFooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 80))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,8 +25,11 @@ class BeautyController: UIViewController, UITableViewDelegate, UITableViewDataSo
         view.backgroundColor = .white
         navigationController?.navigationBar.prefersLargeTitles = true
         navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.blue]
+        navigationItem.largeTitleDisplayMode = .always
+        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         tableViewSettings()
         headerAction()
+        
     }
     
     func tableViewSettings() {
@@ -47,11 +51,16 @@ class BeautyController: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         tableView.rowHeight = 189
         tableView.tableHeaderView = headerView
+        tableView.tableFooterView = tableFooterView
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return beautyViewModel.titleTypeSection.count
     }
+    
+//    func tableView(tableView: UITableView, animationForRowInSection section: Set<Int>) -> UItableViewRowAnimation {
+//    
+//    }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let titleType = beautyViewModel.titleTypeSection[section].title

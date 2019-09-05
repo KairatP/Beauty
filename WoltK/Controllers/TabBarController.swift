@@ -29,7 +29,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         let profileTabBarItem = UITabBarItem(title: "Profile", image: nil, tag: 3)
         profileController.tabBarItem = profileTabBarItem
         
-        let testController = TestViewController()
+        let testController = TestingViewController()
         let testTabBarItem = UITabBarItem(title: "Test", image: nil, tag: 4)
         testController.tabBarItem = testTabBarItem
         
