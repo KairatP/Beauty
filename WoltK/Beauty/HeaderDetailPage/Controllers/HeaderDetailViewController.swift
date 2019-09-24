@@ -11,7 +11,7 @@ import UIKit
 class HeaderDetailViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
    
     let viewModel: HeaderViewModel
-    let tableView = HDTableView()
+    let tableView = HeaderDetailTableView()
     let cellID = "cellID"
     
     init(viewModel: HeaderViewModel) {
@@ -29,7 +29,10 @@ class HeaderDetailViewController: UIViewController, UITableViewDelegate, UITable
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
         setupView()
-        tableView.headerView.paralaxImage(imageName: viewModel.imageNmae)
+        tableView.headerView.paralaxImage(imageName: viewModel.titleImageNmae)
+        tableView.showsVerticalScrollIndicator = false
+        tableView.separatorStyle = .none
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
     
     func setupView() {
@@ -37,7 +40,6 @@ class HeaderDetailViewController: UIViewController, UITableViewDelegate, UITable
         tableView.register(HeaderDetailViewCell.self, forCellReuseIdentifier: cellID)
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
         [tableView.topAnchor.constraint(equalTo: view.topAnchor),
@@ -48,24 +50,40 @@ class HeaderDetailViewController: UIViewController, UITableViewDelegate, UITable
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 100
+        return viewModel.introductionText.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! HeaderDetailViewCell
+        cell.cellInfo(text: viewModel.introductionText[indexPath.row].text, imageName: viewModel.introductionText[indexPath.row].image)
         return cell
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableView.automaticDimension
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        let offset = scrollView.contentOffset.y / (UIScreen.main.bounds.width * 0.25)
+        let offset = scrollView.contentOffset.y / (UIScreen.main.bounds.width * 0.40)
         let color = UIColor(red: 1, green: 1, blue: 1, alpha: offset)
         if offset > 0 {
-            
+
             navigationController?.navigationBar.backgroundColor = color
-            UIApplication.shared.statusBarView?.backgroundColor = color
+//            UIApplication.shared.statusBarView?.backgroundColor = color
+//            if let statusBar = UIStatusBarManager.self as? UIView {
+//            statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {
+//                }
+//
+//            }
+//
+//            f let statusBar = UIStatusBarManager.self as? UIView {
+//            if statusBar.responds(to: #selector(setter: UIView.backgroundColor)) {
+//               statusBar.backgroundColor = #colorLiteral(red: 0, green: 0.7156304717, blue: 0.9302947521, alpha: 1)
         } else {
             navigationController?.navigationBar.backgroundColor = color
-            UIApplication.shared.statusBarView?.backgroundColor = color
+//            UIApplication.shared.statusBarView?.backgroundColor = color
         }
     }
 }
+
+

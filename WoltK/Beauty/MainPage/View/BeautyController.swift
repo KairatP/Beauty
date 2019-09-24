@@ -15,7 +15,7 @@ class BeautyController: UIViewController, UITableViewDelegate, UITableViewDataSo
     
     let beautyViewModel = BeautyViewModel()
     let headerView = HeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 0.6))
-    let tableFooterView = TableFooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 80))
+    let footerView = FooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 80))
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +29,7 @@ class BeautyController: UIViewController, UITableViewDelegate, UITableViewDataSo
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         tableViewSettings()
         headerAction()
+        footerAction()
         
     }
     
@@ -51,7 +52,7 @@ class BeautyController: UIViewController, UITableViewDelegate, UITableViewDataSo
         
         tableView.rowHeight = 189
         tableView.tableHeaderView = headerView
-        tableView.tableFooterView = tableFooterView
+        tableView.tableFooterView = footerView
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -111,6 +112,12 @@ class BeautyController: UIViewController, UITableViewDelegate, UITableViewDataSo
             let viewModel = HeaderViewModel(title: self.beautyViewModel.headerInput[indethPath.row].imageName)
             let dHeaderViewController = HeaderDetailViewController(viewModel: viewModel)
             self.navigationController?.pushViewController(dHeaderViewController, animated: true)
+        }
+    }
+    
+    func footerAction() {
+        footerView.footerColsure = {
+            self.navigationController?.pushViewController(GiftViewController(), animated: true)
         }
     }
 }

@@ -25,7 +25,8 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         let searchTabBarItem = UITabBarItem(title: "Search", image: nil, tag: 2)
         search.tabBarItem = searchTabBarItem
         
-        let profileController = UINavigationController(rootViewController: ProfileViewController())
+        let profileController = ProfileCordinator(nibName: nil, bundle: nil)
+        
         let profileTabBarItem = UITabBarItem(title: "Profile", image: nil, tag: 3)
         profileController.tabBarItem = profileTabBarItem
         
@@ -36,3 +37,4 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate {
         self.viewControllers = [beauty, search, profileController, testController]
     }
 }
+

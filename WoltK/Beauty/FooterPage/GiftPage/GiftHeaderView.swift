@@ -1,15 +1,14 @@
 //
-//  HDView.swift
+//  GiftHeaderView.swift
 //  WoltK
 //
-//  Created by Kairat on 8/19/19.
+//  Created by Kairat on 9/12/19.
 //  Copyright © 2019 Kairat Parmanov. All rights reserved.
 //
 
 import UIKit
 
-class HDView: UIView {
-    
+class GiftHeaderView: UIView {
     var headerImage: UIImageView = {
         let image = UIImageView()
         image.contentMode = .scaleAspectFill
@@ -52,3 +51,5 @@ class HDView: UIView {
         })
     }
 }
+
+

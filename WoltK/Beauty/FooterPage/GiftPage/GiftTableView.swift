@@ -1,22 +1,22 @@
 //
-//  HDTableView.swift
+//  GiftBableView.swift
 //  WoltK
 //
-//  Created by Kairat on 8/20/19.
+//  Created by Kairat on 9/12/19.
 //  Copyright © 2019 Kairat Parmanov. All rights reserved.
 //
 
 import UIKit
 
-class HDTableView: UITableView {
+class GiftTableView: UITableView {
     
     var height: NSLayoutConstraint?
     var bottom: NSLayoutConstraint?
-    let headerView = HDView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 0.59))
+    let giftHeaderView = GiftHeaderView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 0.59))
     
     override init(frame: CGRect, style: UITableView.Style) {
         super.init(frame: frame, style: style)
-        tableHeaderView = headerView
+        tableHeaderView = giftHeaderView
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -29,13 +29,12 @@ class HDTableView: UITableView {
         
         let offsetY = -contentOffset.y
         
-        if let imageView = headerView.subviews.first as? UIImageView {
+        if let imageView = giftHeaderView.subviews.first as? UIImageView {
             imageView.constraints.forEach { (constraint) in
                 if constraint.firstAttribute == .height {
-                    constraint.constant = max(headerView.bounds.height, headerView.bounds.height + offsetY)
+                    constraint.constant = max(giftHeaderView.bounds.height, giftHeaderView.bounds.height + offsetY)
                 }
             }
         }
     }
-    
 }
