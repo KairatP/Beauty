@@ -33,8 +33,8 @@ class BodyDetailTableViewCell: UITableViewCell {
         addSubview(introductionTextView)
         
         introductionTextView.translatesAutoresizingMaskIntoConstraints = false
-        [introductionTextView.topAnchor.constraint(equalTo: self.topAnchor),
-         introductionTextView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+        [introductionTextView.topAnchor.constraint(equalTo: self.topAnchor, constant: 14),
+         introductionTextView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -14),
          introductionTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 14),
          introductionTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -14)
             ].forEach { $0.isActive = true }

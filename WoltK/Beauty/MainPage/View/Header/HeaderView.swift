@@ -53,13 +53,15 @@ class HeaderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, 
         
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         [collectionView.topAnchor.constraint(equalTo: self.topAnchor),
-         collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+//         collectionView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
          collectionView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
          collectionView.trailingAnchor.constraint(equalTo: self.trailingAnchor)
             ].forEach { $0.isActive = true }
         
         pageController.translatesAutoresizingMaskIntoConstraints = false
-        [pageController.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: 10),
+        [pageController.heightAnchor.constraint(equalToConstant: 10),
+         pageController.topAnchor.constraint(equalTo: collectionView.bottomAnchor, constant: 2),
+         pageController.bottomAnchor.constraint(equalTo: self.bottomAnchor),
          pageController.centerXAnchor.constraint(equalTo: self.centerXAnchor)
             ].forEach { $0.isActive = true }
         
@@ -93,7 +95,10 @@ class HeaderView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, 
         return cell
     }
     
+    // -* height insets need check *********************************************
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        print(frame.height, "Height")
         return CGSize(width: frame.width, height: frame.height)
     }
     

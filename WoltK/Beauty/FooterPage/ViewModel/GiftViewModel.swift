@@ -18,5 +18,5 @@ class GiftViewModel {
         GiftModel(sertificateName: "Gold:", sertifcatePrice: "15 000")
     ]
     
-    let giftExplanation = "asvhbakljdbcjkadsnc ac as cas cl ascas cas cpaslcaslc acas c as casj cp ascasc has c as cas lchasch ascahjsc hasc"
+    let giftExplanation = "asvhbakljdbcjkadsnc ac as cas cl ascas cas cpaslcaslc acas c as casj cp ascasc has c as cas lchasch ascahjsc hasc sad sajhcbjashbcj ascas cashjcas chasjch ascas c hashcashlc as csahc shc asc as c ac hashc asc asc has ac ac"
 }

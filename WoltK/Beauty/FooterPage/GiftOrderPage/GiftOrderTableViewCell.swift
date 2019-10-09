@@ -10,11 +10,9 @@ import UIKit
 
 class GiftOrderTableViewCell: UITableViewCell {
     
-    let nameLabel: UILabel = {
-        let label = UILabel()
+    let nameLabel: UIButton = {
+        let label = UIButton()
         label.backgroundColor = .green
-        label.font = .systemFont(ofSize: 22)
-        label.textColor = #colorLiteral(red: 0.9372549057, green: 0.3490196168, blue: 0.1921568662, alpha: 1)
         return label
     }()
     
@@ -52,7 +50,7 @@ class GiftOrderTableViewCell: UITableViewCell {
          priceLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -14),
          priceLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 14),
          priceLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -14),
-         nameLabel.heightAnchor.constraint(equalToConstant: 100)
+         priceLabel.heightAnchor.constraint(equalToConstant: 100)
             ].forEach { $0.isActive = true }
     }
 }

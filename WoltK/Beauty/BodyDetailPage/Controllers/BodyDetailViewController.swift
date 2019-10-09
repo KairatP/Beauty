@@ -12,7 +12,11 @@ class BodyDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     let viewModel: BodyViewModel
     let tableView = BodyDetailTableView()
+    let titleView = BodyDetailTitleView()
     let cellID = "cellID"
+    
+    let ordertView = OrderView(frame: CGRect(x: 0, y: UIScreen.main.bounds.height, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
+    let blackView = UIView()
     
     init(viewModel: BodyViewModel) {
         self.viewModel = viewModel
@@ -28,10 +32,11 @@ class BodyDetailViewController: UIViewController, UITableViewDelegate, UITableVi
         navigationItem.largeTitleDisplayMode = .never
         navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationController?.navigationBar.shadowImage = UIImage()
-        setupTableView()
+        setupView()
+        orderAction()
     }
     
-    func setupTableView() {
+    func setupView() {
         view.addSubview(tableView)
         tableView.bodyHeaderView.paralaxImage(imageName: viewModel.model.image)
         tableView.register(BodyDetailTableViewCell.self, forCellReuseIdentifier: cellID)
@@ -58,7 +63,6 @@ class BodyDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let titleType = viewModel.model.name
-        let titleView = BodyDetailTitleView()
         titleView.titleLable.text = titleType
         titleView.headerData(price: viewModel.model.price, raiting: viewModel.model.rating, raitingImage: viewModel.model.ratingStatus)
         return titleView
@@ -71,6 +75,7 @@ class BodyDetailViewController: UIViewController, UITableViewDelegate, UITableVi
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! BodyDetailTableViewCell
         cell.introductionTextView.text = viewModel.introduction
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell
     }
     
@@ -89,4 +94,40 @@ class BodyDetailViewController: UIViewController, UITableViewDelegate, UITableVi
             navigationController?.navigationBar.backgroundColor = color
         }
     }
+    
+    func orderAction() {
+        titleView.showViewClosure = {
+            self.showOrderSettings()
+        }
+    }
+    
+    func showOrderSettings() {
+        if let window = UIApplication.shared.keyWindow {
+            window.addSubview(blackView)
+            window.addSubview(ordertView)
+            blackView.backgroundColor = UIColor(white: 0, alpha: 0.5)
+            blackView.frame = window.frame
+            blackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleDismiss)))
+            
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.blackView.alpha = 1
+                self.ordertView.frame = CGRect(x: 0, y: window.frame.height - 300, width: window.frame.width, height: 300)
+                    }, completion: nil)
+                }
+        }
+    @objc func handleDismiss() {
+        UIView.animate(withDuration: 0.3) {
+            self.blackView.alpha = 0
+            if let window = UIApplication.shared.keyWindow {
+                self.ordertView.frame = CGRect(x: 0, y: window.frame.height, width: window.frame.width, height: window.frame.height)
+            }
+        }
+    }
 }
+
+
+//let orderButton: UIButton = {
+//    let button = UIButton()
+//    button.setImage(UIImage(named: "Group 5"), for: .normal)
+//    return button
+//}()

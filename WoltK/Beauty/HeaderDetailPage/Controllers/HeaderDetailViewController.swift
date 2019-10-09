@@ -56,6 +56,7 @@ class HeaderDetailViewController: UIViewController, UITableViewDelegate, UITable
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellID, for: indexPath) as! HeaderDetailViewCell
         cell.cellInfo(text: viewModel.introductionText[indexPath.row].text, imageName: viewModel.introductionText[indexPath.row].image)
+        cell.selectionStyle = UITableViewCell.SelectionStyle.none
         return cell
     }
     

@@ -14,6 +14,8 @@ class GiftViewController: UIViewController, UITableViewDelegate, UITableViewData
     let tableView = GiftTableView()
     let cellID = "cellID"
     
+    let footerView = GiftFooterView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 150))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.largeTitleDisplayMode = .never
@@ -36,6 +38,8 @@ class GiftViewController: UIViewController, UITableViewDelegate, UITableViewData
          tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
          tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
             ].forEach { $0.isActive = true }
+        
+        tableView.tableFooterView = footerView
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -67,12 +71,12 @@ class GiftViewController: UIViewController, UITableViewDelegate, UITableViewData
         return cell
     }
     
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerText = viewModel.giftExplanation
-        let footerView = GiftFooterView()
-        footerView.introductionTextView.text = footerText
-        return footerView
-    }
+//    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+//        let footerText = viewModel.giftExplanation
+//        let footerView = GiftFooterView()
+//        footerView.introductionTextView.text = footerText
+//        return footerView
+//    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let giftOrderType = GiftOrderViewModel(giftType: self.viewModel.model[indexPath.row])

@@ -12,7 +12,7 @@ class HeaderDetailViewCell: UITableViewCell {
     
     var textImage: UIImageView = {
         let image = UIImageView()
-        image.contentMode = .scaleAspectFill
+        image.contentMode = .scaleToFill
         return image
     }()
     
@@ -42,7 +42,7 @@ class HeaderDetailViewCell: UITableViewCell {
         
         addSubview(intruductionTextView)
         intruductionTextView.translatesAutoresizingMaskIntoConstraints = false
-        [intruductionTextView.topAnchor.constraint(equalTo: self.topAnchor, constant: 10),
+        [intruductionTextView.topAnchor.constraint(equalTo: self.topAnchor, constant: 7),
          intruductionTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 14),
          intruductionTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -14)
             ].forEach { $0.isActive = true }
@@ -50,8 +50,8 @@ class HeaderDetailViewCell: UITableViewCell {
         addSubview(textImage)
         textImage.translatesAutoresizingMaskIntoConstraints = false
         [
-            textImage.topAnchor.constraint(equalTo: intruductionTextView.bottomAnchor, constant: 20),
-         textImage.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -20),
+            textImage.topAnchor.constraint(equalTo: intruductionTextView.bottomAnchor, constant: 7),
+         textImage.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -7),
          textImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 14),
          textImage.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -14),
          textImage.heightAnchor.constraint(equalToConstant: 200)
